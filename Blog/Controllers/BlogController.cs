@@ -57,11 +57,12 @@ namespace Blog.Controllers
         }
 
         [HttpGet]
-        [Route("viewallblogs")]
-        public IActionResult ViewAllBlogs(string login)
+        [Route("viewuserallblogs")]
+        public IActionResult ViewUserAllBlogs(string login)
         {
             using (var db = new DataBaseContext())
             {
+                
                 var list = db.Text.Where(x => x.Login == login).ToList();
 
                 if (list.Count() == 0)
@@ -71,10 +72,25 @@ namespace Blog.Controllers
             }
 
         }
+        [HttpGet]
+        [Route("viewallblogs")]
+        public IActionResult ViewAllBlogs(int page)
+        {
+            using (var db = new DataBaseContext())
+            {
+                int pageSize = 5;
+                int startIndex = page * pageSize - pageSize;
+                int endIndex = startIndex + pageSize;
+
+                return Ok(db.Text.Skip(startIndex).Take(pageSize).ToList());
+               
+            }
+
+        }
 
         [HttpGet]
         [Route("viewsubblogs")]
-        public IActionResult ViewSubBlogs(string login)
+        public IActionResult ViewSubBlogs(string login,int page)
         {
             using (var db = new DataBaseContext())
             {
@@ -94,9 +110,19 @@ namespace Blog.Controllers
                         blogs.Add(a);
                     }
                 }
-               
+                int pageSize = 2;
+                int startIndex = page * pageSize - pageSize;
+                int endIndex = startIndex + pageSize;
 
-                return Ok(blogs);
+                List<BlogSubs> list = new List<BlogSubs>();
+
+                while (startIndex < endIndex)
+                {
+                    list.Add(blogs[startIndex]);
+                    startIndex++;
+                }
+
+                return Ok(list);
             }
 
         }
