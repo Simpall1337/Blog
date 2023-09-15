@@ -8,12 +8,11 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Blog.Controllers
 {
-   // [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class BlogController : ControllerBase
     {
         [HttpPost]
-        [Route("createblog")]
         public IActionResult CreateBlog(string login,string text)
         {
             using (var db = new DataBaseContext())
@@ -43,8 +42,7 @@ namespace Blog.Controllers
 
         }
 
-        [HttpGet]
-        [Route("deleteblog")]
+        [HttpDelete]
         public IActionResult DeleteBlog(int id)
         {
             using (var db = new DataBaseContext())
@@ -110,7 +108,7 @@ namespace Blog.Controllers
                         blogs.Add(a);
                     }
                 }
-                int pageSize = 2;
+                int pageSize = 5;
                 int startIndex = page * pageSize - pageSize;
                 int endIndex = startIndex + pageSize;
 

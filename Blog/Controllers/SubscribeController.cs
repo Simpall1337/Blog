@@ -4,12 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Controllers
 {
-    //[Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class SubscribeController : ControllerBase
     {
-        [HttpGet]
-        [Route("subscribe")]
+        [HttpPost]
         public IActionResult Subscribe(string login,string tosub)
         {
             using (var db = new DataBaseContext())
@@ -32,8 +31,7 @@ namespace Blog.Controllers
 
         }
 
-        [HttpGet]
-        [Route("unsubscribe ")]
+        [HttpDelete]
         public IActionResult UnSubscribe(string login, string unsub)
         {
             using (var db = new DataBaseContext())
@@ -49,7 +47,7 @@ namespace Blog.Controllers
         }
 
         [HttpGet]
-        [Route("viewsubscribes ")]
+        [Route("viewsubscribes")]
         public IActionResult ViewSubscribe(string login)
         {
             using (var db = new DataBaseContext())
@@ -72,7 +70,7 @@ namespace Blog.Controllers
         }
 
         [HttpGet]
-        [Route("viewtosubscribe ")]
+        [Route("viewtosubscribe")]
         public IActionResult ViewToSubscribe(string login)
         {
             using (var db = new DataBaseContext())

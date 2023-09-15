@@ -4,12 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Blog.Controllers
 {
-    //[Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class CommentsController : ControllerBase
     {
         [HttpPost]
-        [Route("createcommnets")]
         public IActionResult CreateComments(int id, string login, string comment)
         {
             using (var db = new DataBaseContext())
@@ -35,11 +34,9 @@ namespace Blog.Controllers
                     return BadRequest();
                 }
             }
-
         }
 
         [HttpGet]
-        [Route("viewcommnets")]
         public IActionResult ViewComments(int id)
         {
             using (var db = new DataBaseContext())
@@ -47,11 +44,9 @@ namespace Blog.Controllers
                 var list = db.Coments.Where(x => x.Id == id).ToList();
                 return Ok(list);
             }
-
         }
 
-        [HttpGet]
-        [Route("deletecommnets")]
+        [HttpDelete]
         public IActionResult DeleteComments(int idcomment)
         {
             using (var db = new DataBaseContext())
@@ -61,8 +56,6 @@ namespace Blog.Controllers
                 db.SaveChanges();
                 return Ok();
             }
-
         }
-
     }
 }

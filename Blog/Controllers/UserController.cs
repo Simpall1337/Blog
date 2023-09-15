@@ -1,15 +1,16 @@
 ﻿using Blog.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Blog.Controllers
 {
-    //[Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {
         [HttpPost]
-        [Route("createacc")]
         public IActionResult CreateAccount(string login, string password) {
 
             using (var db = new DataBaseContext())
@@ -38,8 +39,7 @@ namespace Blog.Controllers
 
         }
 
-        [HttpPost]
-        [Route("loginacc")]
+        [HttpGet]
         public IActionResult LoginAccount(string login, string password)
         {
             using (var db = new DataBaseContext())
@@ -62,14 +62,19 @@ namespace Blog.Controllers
             return BadRequest();
         }
 
-        //[HttpGet]
-        //[Route("deleteaccount")]
-        //public IActionResult DeleteAccount()
-        //{
+        [HttpDelete]
+        public IActionResult DeleteAccount(string login)
+        {
+            using (var db = new DataBaseContext())
+            {
+                var userToDelete = db.Users.FirstOrDefault(e => e.Login == login);
+                db.Users.Remove(userToDelete);
+                db.SaveChanges();
+                return Ok();
+            }
 
-        //}
+        }
 
+        
     }
-
-  
 }

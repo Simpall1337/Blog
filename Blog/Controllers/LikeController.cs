@@ -5,12 +5,11 @@ using System.Xml.Linq;
 
 namespace Blog.Controllers
 {
-    //[Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class LikeController : ControllerBase
     {
-        [HttpGet]
-        [Route("like")]
+        [HttpPost]
         public IActionResult PutLike(int id,string login)
         {
             using (var db = new DataBaseContext())
@@ -36,8 +35,7 @@ namespace Blog.Controllers
 
         }
 
-        [HttpGet]
-        [Route("dislike")]
+        [HttpDelete]
         public IActionResult DisLike(int id, string login)
         {
             using (var db = new DataBaseContext())
@@ -55,7 +53,6 @@ namespace Blog.Controllers
         }
 
         [HttpGet]
-        [Route("viewlikes")]
         public IActionResult ViewLikes(int id)
         {
             using (var db = new DataBaseContext())
